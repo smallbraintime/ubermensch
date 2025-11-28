@@ -1,6 +1,5 @@
 package com.pollub.ubermensch.model;
 
-import com.pollub.ubermensch.util.Location;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -20,9 +19,8 @@ public class User {
     private String name;
     private String email;
     private String phoneNumber;
+    private String country;
     @Enumerated(EnumType.STRING)
     private Role role;
     private String passwordHash;
-    @Transient
-    private Location location;
 }

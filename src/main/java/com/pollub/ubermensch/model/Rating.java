@@ -14,9 +14,7 @@ public class Rating {
     private Long id;
     private Long rideId;
     private Long driverId;
-    @OneToOne
-    @JoinColumn(name = "rider_id")
-    private Rider rider;
+    private Long riderId;
     private Byte score;
     private String comment;
     private Date createdAt;

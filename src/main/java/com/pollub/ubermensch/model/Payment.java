@@ -14,9 +14,8 @@ public class Payment {
     }
 
     enum PaymentStatus {
-        PENDING,
-        PAID,
-        FAILED
+        UNPAID,
+        PAID
     }
 
     @Id

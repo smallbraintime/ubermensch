@@ -13,10 +13,8 @@ public class Driver {
     private Long userId;
     private String name;
     private String licenseNo;
-    @OneToOne
-    @JoinColumn(name = "vehicle_id")
+    @Embedded
     private Vehicle vehicle;
     private Float avgRating;
     private Integer ratingCount;
-    private boolean isAvailable;
 }
