@@ -1,15 +1,20 @@
 package com.pollub.ubermensch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-public class User {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Account {
     public enum Role {
-        RIDER,
-        DRIVER,
+        USER,
         ADMIN
     }
 
@@ -17,10 +22,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String surname;
     private String email;
     private String phoneNumber;
     private String country;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private String passwordHash;
+    @JsonIgnore
+    private String password;
 }

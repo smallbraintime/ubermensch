@@ -1,9 +1,7 @@
 package com.pollub.ubermensch.model;
 
-import com.pollub.ubermensch.util.Location;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
@@ -11,6 +9,7 @@ import java.util.Date;
 @Data
 public class Ride {
     enum RideStatus {
+        PENDING,
         COMPLETED,
         UNCOMPLETED
     }
@@ -19,14 +18,21 @@ public class Ride {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @JoinColumn(name = "rider_id")
-    private Rider rider;
+    @JoinColumn(name = "account_id")
+    private Account rider;
     @OneToOne
     @JoinColumn(name = "driver_id")
     private Driver driver;
-    private Location pickupLocation;
-    private Location dropoffLocation;
+    private String pickupCity;
+    private String pickupStreet;
+    private Long pickupLatitude;
+    private Long pickupLongitude;
+    private String dropoffCity;
+    private String dropoffStreet;
+    private Long dropoffLatitude;
+    private Long dropoffLongitude;
     private String country;
+    @Enumerated(EnumType.STRING)
     private RideStatus status;
     private Date requestedAt;
     private Date startedAt;

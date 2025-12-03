@@ -1,9 +1,7 @@
 package com.pollub.ubermensch.model;
 
-import com.pollub.ubermensch.util.Money;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 @Data
 @Entity
@@ -21,7 +19,10 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long rideId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ride_id")
+    private Ride ride;
+    @Embedded
     private Money fare;
     @Enumerated(EnumType.STRING)
     private PaymentMethod method;

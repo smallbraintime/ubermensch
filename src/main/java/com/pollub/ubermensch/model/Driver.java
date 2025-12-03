@@ -2,7 +2,6 @@ package com.pollub.ubermensch.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 @Entity
 @Data
@@ -10,7 +9,9 @@ public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account account;
     private String name;
     private String licenseNo;
     @Embedded
