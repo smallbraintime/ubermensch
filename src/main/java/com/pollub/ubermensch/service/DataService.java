@@ -15,11 +15,38 @@ public class DataService {
     @Autowired
     private DriverRepository driverRepository;
     @Autowired
-    private RiderRepository riderRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
     @Autowired
     private RatingRepository ratingRepository;
+
+    public List<Ride> getRidesByDriver(String email) {
+        return rideRepository.findByDriverAccountEmailOrderByStartedAtDesc(email);
+    }
+
+    public List<Ride> getRidesByRider(String email) {
+        return rideRepository.findByRiderEmailOrderByStartedAtDesc(email);
+    }
+
+    public Optional<Account> getAccount(String email) {
+        return accountRepository.findByEmail(email);
+    }
+
+    public Optional<Driver> getDriver(String email) {
+        return driverRepository.findByAccountEmail(email);
+    }
+
+    public List<Rating> getRatingsByDriver(Long driverId) {
+        return ratingRepository.findByDriverIdOrderByCreatedAtDesc(driverId);
+    }
+
+    public List<Rating> getRatingsByRider(Long riderId) {
+        return ratingRepository.findByRiderIdOrderByCreatedAtDesc(riderId);
+    }
+
+    public Optional<Rating> getRatingByRide(Long rideId) {
+        return ratingRepository.findByRideIdOrderByCreatedAtDesc(rideId);
+    }
+
 
     public List<Ride> getRidesByDriver(Long driverId) {
         return rideRepository.findByDriverIdOrderByStartedAtDesc(driverId);
@@ -33,23 +60,23 @@ public class DataService {
         return driverRepository.findById(driverId);
     }
 
-    public Optional<Rider> getRider(Long riderId) {
-        return riderRepository.findById(riderId);
+    public Optional<Account> getAccount(Long accountId) {
+        return accountRepository.findById(accountId);
     }
 
-    public Optional<User> getUser(Long userId) {
-        return userRepository.findById(userId);
+    public Optional<Ride> getRide(Long rideId) {
+        return rideRepository.findById(rideId);
     }
 
-    public List<Rating> getRatingsByDriver(Long driverId) {
-        return ratingRepository.findByDriverIdOrderByCreatedAtDesc(driverId);
+    public List<Ride> getRides() {
+        return rideRepository.findAll();
     }
 
-    public List<Rating> getRatingsByRider(Long riderId) {
-        return ratingRepository.findByRiderIdOrderByCreatedAtDesc(riderId);
+    public List<Account> getAccounts() {
+        return accountRepository.findAll();
     }
 
-    public Optional<Rating> getRatingByRide(Long rideId) {
-        return ratingRepository.findByRideIdOrderByCreatedAtDesc(rideId);
+    public List<Driver> getDrivers() {
+        return driverRepository.findAll();
     }
 }
