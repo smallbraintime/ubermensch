@@ -1,0 +1,26 @@
+package com.pollub.ubermensch.driver;
+
+import com.pollub.ubermensch.shared.Account;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
+
+@Entity
+@Data
+@Builder
+public class Driver {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+    private String licenseNo;
+
+    @Embedded
+    private Vehicle vehicle;
+
+    private Float avgRating;
+}
