@@ -1,14 +1,17 @@
 package com.pollub.ubermensch.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.geo.*;
 
 import java.util.Date;
 
 @Entity
 @Data
+@Builder
 public class Ride {
-    enum RideStatus {
+    public enum RideStatus {
         PENDING,
         COMPLETED,
         UNCOMPLETED
@@ -23,18 +26,11 @@ public class Ride {
     @OneToOne
     @JoinColumn(name = "driver_id")
     private Driver driver;
-    private String pickupCity;
-    private String pickupStreet;
-    private Long pickupLatitude;
-    private Long pickupLongitude;
-    private String dropoffCity;
-    private String dropoffStreet;
-    private Long dropoffLatitude;
-    private Long dropoffLongitude;
+    private Point pickupLocation;
+    private Point dropoffLocation;
     private String country;
     @Enumerated(EnumType.STRING)
     private RideStatus status;
-    private Date requestedAt;
     private Date startedAt;
     @OneToOne
     @JoinColumn(name = "payment_id")
