@@ -23,22 +23,22 @@ public class DataController {
 
     @GetMapping("public/rides/driver")
     public List<Ride> getRidesByDriver() {
-        return dataService.getRidesByDriver(getEmail());
+        return dataService.getRidesByDriver(getId());
     }
 
     @GetMapping("public/rides/rider")
     public List<Ride> getRidesByRider() {
-        return dataService.getRidesByRider(getEmail());
+        return dataService.getRidesByRider(getId());
     }
 
     @GetMapping("public/account")
     public ResponseEntity<Account> getAccount() {
-        return dataService.getAccount(getEmail()).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return dataService.getAccount(getId()).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("public/driver")
     public ResponseEntity<Driver> getDriver() {
-        return dataService.getDriver(getEmail()).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return dataService.getDriver(getId()).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("public/ratings/driver/{driverId}")
@@ -97,7 +97,7 @@ public class DataController {
         return dataService.getDrivers();
     }
 
-    private String getEmail() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+    private Long getId() {
+        return Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
