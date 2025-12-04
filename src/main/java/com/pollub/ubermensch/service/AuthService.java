@@ -26,6 +26,6 @@ public class AuthService {
     public Optional<String> login(Login login) {
         return accountRepository.findByEmail(login.getEmail())
                 .filter(account -> passwordEncoder.matches(login.getPassword(), account.getPassword()))
-                .map(account -> jwtService.generateToken(login.getEmail(), account.getRole().name()));
+                .map(account -> jwtService.generateToken(account.getId(), login.getEmail(), account.getRole().name()));
     }
 }
