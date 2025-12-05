@@ -22,6 +22,7 @@ public class AuthService {
 
     @Transactional
     public void register(Register register) {
+        if (accountRepository.existsByEmail(register.getEmail())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "account with specified email already exists");
         accountRepository.save(Account.builder()
                 .name(register.getName())
                 .email(register.getEmail())
