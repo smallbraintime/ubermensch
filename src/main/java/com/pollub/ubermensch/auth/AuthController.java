@@ -23,9 +23,4 @@ public class AuthController {
     public ResponseEntity<String> login(@RequestBody @Valid Login login) {
         return ResponseEntity.ok(authService.login(login));
     }
-
-    @GetMapping("/account")
-    public ResponseEntity<Account> getAccount() {
-        return ResponseEntity.ok(authService.getAccount(Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getName())));
-    }
 }

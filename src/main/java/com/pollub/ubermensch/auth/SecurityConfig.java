@@ -26,10 +26,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api", "/error").permitAll()
-//                        .requestMatchers("/data/public/**").hasAnyRole("USER", "ADMIN")
-//                        .requestMatchers("/data/private/**").hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                        .requestMatchers("/api/auth/**", "/error").permitAll()
+                        .requestMatchers("/api/**").hasAnyRole("USER", "ADMIN")
                 )
                 .anonymous(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

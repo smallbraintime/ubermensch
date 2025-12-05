@@ -45,12 +45,6 @@ public class AuthService {
     }
 
     @Transactional
-    public Account getAccount(Long accountId) {
-        return accountRepository.findById(accountId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "account not found"));
-    }
-
-    @Transactional
     public void deleteAccount(Long accountId) {
         accountRepository.deleteById(accountId);
     }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 public class DriverService {
     @Autowired
@@ -16,21 +18,33 @@ public class DriverService {
     AccountRepository accountRepository;
 
     @Transactional
-    public void registerDriver(Long accountId, DriverRegister driverRegister) {
+    public Long registerDriver(Long accountId, DriverRegister driverRegister) {
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "account not found"));
 
-        var driver = Driver.builder()
-                .avgRating(0.0f)
-                .licenseNo(driverRegister.getLicenseNo())
-                .vehicle(driverRegister.getVehicle())
-                .account(account)
-                .build();
-        driverRepository.save(driver);
+        Optional<Driver> existingDriver = driverRepository.findByAccountId(accountId);
+
+        if (!existingDriver.isPresent()) {
+            var driver = Driver.builder()
+                    .avgRating(0.0f)
+                    .licenseNo(driverRegister.getLicenseNo())
+                    .vehicle(driverRegister.getVehicle())
+                    .account(account)
+                    .build();
+            return driverRepository.save(driver).getId();
+        }
+
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "rider already registered for this account");
     }
 
     @Transactional
     public Driver getDriver(Long driverId) {
         return driverRepository.findById(driverId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "driver not found"));
+    }
+
+    @Transactional
+    public Account getAccount(Long accountId) {
+        return accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "account not found"));
     }
 }

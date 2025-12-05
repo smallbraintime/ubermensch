@@ -46,7 +46,6 @@ public class Ride {
 
     private Date startedAt;
 
-    @OneToOne
-    @JoinColumn(name = "payment_id")
+    @Embedded
     private Payment payment;
 }

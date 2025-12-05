@@ -7,7 +7,4 @@ import java.util.List;
 
 @Repository
 public interface RideRepository extends JpaRepository<Ride, Long> {
-    List<Ride> findByDriverIdOrderByStartedAtDesc(Long driverId);
-
-    List<Ride> findByRiderIdOrderByStartedAtDesc(Long riderId);
 }

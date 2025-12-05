@@ -21,7 +21,7 @@ public class RatingController {
     }
 
     @GetMapping("/ratings/{driverId}")
-    public ResponseEntity<List<Rating>> getRatingsOyDriver(@RequestParam Long driverId) {
+    public ResponseEntity<List<Rating>> getRatingsByDriver(@PathVariable Long driverId) {
         return ResponseEntity.ok(ratingService.getRatingsOfDriver(driverId));
     }
 }

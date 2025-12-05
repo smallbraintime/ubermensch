@@ -5,9 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Entity
 @Builder
-@Embedded
+@Embeddable
 public class Payment {
     public enum PaymentMethod {
         CARD,
@@ -19,10 +18,6 @@ public class Payment {
         PAID
     }
 
-    @OneToOne
-    @JoinColumn(name = "ride_id")
-    private Ride ride;
-
     @Embedded
     private Money fare;
 
@@ -30,5 +25,5 @@ public class Payment {
     private PaymentMethod method;
 
     @Enumerated(EnumType.STRING)
-    private PaymentStatus status;
+    private PaymentStatus paymentStatus;
 }

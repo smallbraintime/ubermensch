@@ -1,67 +1,51 @@
 package com.pollub.ubermensch.ride;
 
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/ride")
 public class RideController {
+    @Autowired
+    RideService rideService;
+
     @GetMapping("/{rideId}")
-    public ResponseEntity<Ride> getRide(@RequestParam Long rideId) {
+    public ResponseEntity<Ride> getRide(@PathVariable Long rideId) {
+        Ride ride = rideService.getRide(rideId);
+        return ResponseEntity.ok(ride);
     }
 
     @PostMapping("/driver/available")
     public ResponseEntity<Void> registerDriverAvailability(@RequestBody @Valid DriverAvailabilityRequest request) {
+        rideService.registerDriverAvailability(request);
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/driver/update")
-    public ResponseEntity<Void> updateDriverLocation(@RequestBody @Valid Point location) {
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/driver/location/{accountId}")
-    public ResponseEntity<Point> getRiderLocation() {
     }
 
     @GetMapping("/driver/requests")
-    public ResponseEntity<List<RideRequest>> getRiderRequests() {
+    public ResponseEntity<List<RideRequest>> getRideRequests(@RequestBody @Valid Point location) {
+        List<RideRequest> requests = rideService.getRideRequests(location);
+        return ResponseEntity.ok(requests);
     }
 
-    @PostMapping("/driver/accept/{accountId}")
-    public ResponseEntity<Void> acceptRide(Long accountId) {
-        return ResponseEntity.ok().build();
+    @GetMapping("/driver/allrequests")
+    public ResponseEntity<List<RideRequest>> getAllRideRequests() {
+        List<RideRequest> requests = rideService.getAllRideRequests();
+        return ResponseEntity.ok(requests);
     }
 
     @GetMapping("/rider/drivers")
-    public ResponseEntity<List<DriverAvailablility>> getNearbyDrivers() {
+    public ResponseEntity<List<DriverAvailablility>> getNearbyDrivers(@RequestBody @Valid Point location) {
+        List<DriverAvailablility> drivers = rideService.getNearbyDrivers(location);
+        return ResponseEntity.ok(drivers);
     }
 
-    @PostMapping("/rider/request/{riderId}")
+    @PostMapping("/rider/request")
     public ResponseEntity<Void> requestRide(@RequestBody @Valid RideRequest request) {
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/rider/finish/{rideId}")
-    public ResponseEntity<Void> finishRide(@RequestParam Long rideId) {
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/rider/cancel{rideId}")
-    public ResponseEntity<Void> cancelRide(@RequestParam Long rideId) {
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/rider/status/{accountId}")
-    public ResponseEntity<Ride.RideStatus> getRideStatus(@RequestParam Long accountId) {
-    }
-
-    @GetMapping("/rider/location/{driverId}")
-    public ResponseEntity<Point> getDriverLocation(@RequestParam Long driverId) {
+        rideService.requestRide(request);
+        return ResponseEntity.status(201).build();
     }
 }

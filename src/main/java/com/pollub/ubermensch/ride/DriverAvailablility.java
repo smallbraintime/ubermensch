@@ -1,20 +1,28 @@
 package com.pollub.ubermensch.ride;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.geo.Point;
 
+import java.util.Date;
+
 @Data
+@AllArgsConstructor
 public class DriverAvailablility {
     @NotBlank
-    Long driverId;
+    private Long driverId;
 
     @NotBlank
-    String name;
+    private String name;
 
     @NotBlank
-    String phoneNumber;
+    private String phoneNumber;
 
     @NotBlank
-    private Point location;
+    private String WBUrl; // url for web socket that publishes geo info
+
+    @NotBlank
+    private Date createdAt;
+
 }

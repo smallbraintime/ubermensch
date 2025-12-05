@@ -1,22 +1,34 @@
 package com.pollub.ubermensch.ride;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.geo.Point;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
 public class RideRequest {
-    @NotBlank
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public class Point {
+        Double x;
+        Double y;
+    }
+
+    @NotNull
     private Long accountId;
 
-    @NotBlank
+    @NotNull
+    @Valid
     private Point currentLocation;
 
-    @NotBlank
+    @NotNull
+    @Valid
     private Point dropoffLocation;
 
-    @NotBlank
+    @NotNull
     private Date createdAt;
 }
